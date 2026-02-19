@@ -60,6 +60,16 @@ print(runner.stats)
 | `optimization_interval` | float | `1.0` | Seconds between optimization steps |
 | `max_steps` | int \| None | `None` | Max steps before stopping (None = forever) |
 
+## Three-Level Patience System
+
+When using the predictor plugin, optimization involves three patience levels:
+
+| Level | Name | Config Key | Controls | Default |
+|-------|------|------------|----------|---------|
+| **L1** | Candidate Training | `early_patience` | Epochs without val_loss improvement before stopping one candidate's training | 80–100 |
+| **L2** | Stage Progression | `optimization_patience` | Generations without best-fitness improvement before advancing to next GA stage | 8–10 |
+| **L3** | Meta-Optimizer | *(not yet implemented)* | Network-level predictor trained on (params→performance) from OLAP data | — |
+
 ## Architecture
 
 The optimizer is stateless beyond its current best. It:
